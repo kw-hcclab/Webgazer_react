@@ -1,21 +1,21 @@
-import React, { useEffect } from 'react';
-import './App.css';
-import webgazer from './WebGazer/src/index.mjs';
+import React, { useEffect } from "react";
+import "./App.css";
+import webgazer from "./WebGazer/src/index.mjs";
 
 function App() {
   useEffect(() => {
     async function startGaze() {
       // webgazer.params.storingPoints = false;
       await webgazer
-        .setRegression('ridge')
+        .setRegression("ridge")
         .setGazeListener((data, clock) => {
-          // if(data) console.log(data);
+          if (data) console.log(data);
         })
         .saveDataAcrossSessions(true)
         .begin();
       webgazer
         /* shows all video previews */
-        .showVideoPreview(true)
+        .showVideoPreview(false)
         /* shows a square every 100 milliseconds where current prediction is */
         .showPredictionPoints(true)
         /* Kalman Filter defaults to on. Can be toggled by user. */
@@ -38,7 +38,7 @@ function App() {
 
     startGaze();
     return () => {
-      window.addEventListener('beforeunload', () => {
+      window.addEventListener("beforeunload", () => {
         webgazer.end();
       });
     };
